@@ -28,7 +28,8 @@
 
 #include "couchdb/export.hpp"
 
-namespace CouchDB{
+namespace CouchDB
+{
 
 // some data helpers aligned with TinyJSON implementation
 typedef boost::shared_ptr<boost::any>  Variant;
@@ -37,15 +38,17 @@ typedef std::map<std::string, Variant> Object;
 
 // convenience template
 template<typename T>
-Variant createVariant(T value){
+Variant createVariant(T value)
+{
    return Variant(new boost::any(value));
 }
 
 template<>
 COUCHDB_API Variant createVariant<const char*>(const char *value);
 
-class COUCHDB_API Communication{
-   public:
+class COUCHDB_API Communication
+{
+public:
       typedef std::map<std::string, std::string> HeaderMap;
 
       Communication();
@@ -59,7 +62,7 @@ class COUCHDB_API Communication{
                       const std::string &data = "");
 
       std::string getRawData(const std::string&);
-   private:
+private:
       void init(const std::string&);
       Variant getData(const std::string&, const std::string&,
                       std::string, const HeaderMap&);

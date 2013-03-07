@@ -28,12 +28,14 @@ namespace CouchDB
 #define DEFAULT_COUCHDB_URL "http://localhost:5984"
 
 template<>
-Variant createVariant<const char*>(const char *value){
+Variant createVariant<const char*>(const char *value)
+{
    return createVariant<std::string>(std::string(value));
 }
 
-static Variant parseData(const string &buffer){
-   Variant var = ::tair::json::parse(buffer.begin(), buffer.end());
+static Variant parseData(const string &buffer)
+{
+   Variant var = ::json::parse(buffer.begin(), buffer.end());
 
 #ifdef COUCH_DB_DEBUG
    cout << "Data:" << endl
@@ -43,9 +45,11 @@ static Variant parseData(const string &buffer){
    return var;
 }
 
-static int writer(char *data, size_t size, size_t nmemb, string *dest){
-   int written = 0;
-   if(dest != NULL){
+static size_t writer(char *data, size_t size, size_t nmemb, string *dest)
+{
+   size_t written = 0;
+   if(dest != NULL)
+   {
       written = size * nmemb;
       dest->append(data, written);
    }
@@ -53,25 +57,31 @@ static int writer(char *data, size_t size, size_t nmemb, string *dest){
    return written;
 }
 
-static size_t reader(void *ptr, size_t size, size_t nmemb, string *stream){
-   int actual  = (int)stream->size();
-   int written = size * nmemb;
+static size_t reader(void *ptr, size_t size, size_t nmemb, string *stream)
+{
+   size_t actual  = stream->size();
+   size_t written = size * nmemb;
    if(written > actual)
+   {
       written = actual;
+   }
    memcpy(ptr, stream->c_str(), written);
    stream->erase(0, written);
    return written;
 }
 
-Communication::Communication(){
+Communication::Communication()
+{
    init(DEFAULT_COUCHDB_URL);
 }
 
-Communication::Communication(const string &url){
+Communication::Communication(const string &url)
+{
    init(url);
 }
 
-void Communication::init(const string &url){
+void Communication::init(const string &url)
+{
    curl_global_init(CURL_GLOBAL_DEFAULT);
 
    curl = curl_easy_init();
@@ -89,14 +99,16 @@ void Communication::init(const string &url){
    baseURL = url;
 }
 
-Communication::~Communication(){
+Communication::~Communication()
+{
    if(curl)
       curl_easy_cleanup(curl);
    curl_global_cleanup();
 }
 
 Variant Communication::getData(const string &url, const string &method,
-                               const string &data){
+                               const string &data)
+{
    HeaderMap headers;
    return getData(url, method, data, headers);
 }
@@ -106,20 +118,23 @@ Variant Communication::getData(const string &url, const HeaderMap &headers,
    return getData(url, method, data, headers);
 }
 
-string Communication::getRawData(const string &url){
+string Communication::getRawData(const string &url)
+{
    HeaderMap headers;
    getRawData(url, "GET", "", headers);
    return buffer;
 }
 
 Variant Communication::getData(const string &url, const string &method,
-                               string data, const HeaderMap &headers){
+                               string data, const HeaderMap &headers)
+{
    getRawData(url, method, data, headers);
    return parseData(buffer);
 }
 
 void Communication::getRawData(const string &_url, const string &method,
-                               string data, const HeaderMap &headers){
+                               string data, const HeaderMap &headers)
+{
    string url = baseURL + _url;
 
 #ifdef COUCH_DB_DEBUG
@@ -195,7 +210,8 @@ static void printHelper(ostream &out, const boost::any &value, string indent){
 
    if(value.empty())
       out << "null";
-   else{
+   else
+   {
       const type_info &type = value.type();
       if(type == typeid(string))
          out << '"' << boost::any_cast<string>(value) << '"';
@@ -277,7 +293,8 @@ static void printHelper(ostream &out, const boost::any &value, string indent){
 
 } //namespace CouchDB
 
-ostream& operator<<(ostream &out, const CouchDB::Variant &value){
+ostream& operator<<(ostream &out, const CouchDB::Variant &value)
+{
    CouchDB::printHelper(out, *value, "");
    return out;
 }

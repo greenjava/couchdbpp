@@ -14,8 +14,6 @@
  * limitations under the License.
 **/
 
-#include <boost/cstdint.hpp>
-
 #include <sstream>
 #include <typeinfo>
 #include "couchdb/Database.hpp"
@@ -38,35 +36,36 @@ Database::Database(const Database &db)
 Database::~Database(){
 }
 
-Database& Database::operator=(Database &db){
+Database& Database::operator=(Database &db)
+{
    name = db.getName();
    return *this;
 }
 
-const std::string& Database::getName() const{
+const std::string& Database::getName() const
+{
    return name;
 }
 
-std::vector<Document> Database::listDocuments(){
+std::vector<Document> Database::listDocuments()
+{
    Variant var = comm.getData("/" + name + "/_all_docs");
    Object  obj = boost::any_cast<Object>(*var);
    Variant total_rows = obj["total_rows"];
 
    const std::type_info &type = total_rows->type();
-   int numRows = 0;
-   if(type == typeid(::boost::int32_t))
-      numRows = boost::any_cast< ::boost::int32_t>(*total_rows);
-   else if(type == typeid(::boost::int64_t))
-      numRows = boost::any_cast< ::boost::int64_t>(*total_rows);
+   int numRows = boost::any_cast<int>(*total_rows);
 
    std::vector<Document> docs;
 
-   if(numRows > 0){
+   if(numRows > 0)
+   {
       Array rows = boost::any_cast<Array>(*obj["rows"]);
 
       Array::iterator        row     = rows.begin();
       const Array::iterator &row_end = rows.end();
-      for(; row != row_end; ++row){
+      for(; row != row_end; ++row)
+	  {
          Object docObj = boost::any_cast<Object>(**row);
          Object values = boost::any_cast<Object>(*docObj["value"]);
 
@@ -82,7 +81,8 @@ std::vector<Document> Database::listDocuments(){
    return docs;
 }
 
-Document Database::getDocument(const std::string &id, const std::string &rev){
+Document Database::getDocument(const std::string &id, const std::string &rev)
+{
    std::string url = "/" + name + "/" + id;
    if(rev.size() > 0)
       url += "?rev=" + rev;
@@ -102,26 +102,31 @@ Document Database::getDocument(const std::string &id, const std::string &rev){
    return doc;
 }
 
-static std::string createJSON(const Variant &data){
+static std::string createJSON(const Variant &data)
+{
    std::ostringstream ostr;
    ostr << data;
    return ostr.str();
 }
 
-Document Database::createDocument(const Variant &data, const std::string &id){
+Document Database::createDocument(const Variant &data, const std::string &id)
+{
    std::vector<Attachment> attachments;
    return createDocument(data, attachments, id);
 }
 
 Document Database::createDocument(Variant data,
                                   std::vector<Attachment> attachments,
-                                  const std::string &id){
-   if(attachments.size() > 0){
+                                  const std::string &id)
+{
+   if(attachments.size() > 0)
+   {
       Object attachmentObj;
 
       std::vector<Attachment>::iterator attachment = attachments.begin();
       const std::vector<Attachment>::iterator &attachmentEnd = attachments.end();
-      for(; attachment != attachmentEnd; ++attachment){
+      for(; attachment != attachmentEnd; ++attachment)
+	  {
          Object attachmentData;
          attachmentData["content_type"] = createVariant(attachment->getContentType());
          attachmentData["data"        ] = createVariant(attachment->getData());
@@ -157,6 +162,7 @@ Document Database::createDocument(Variant data,
 
 } //namespace CouchDB
 
-std::ostream& operator<<(std::ostream &out, const CouchDB::Database &db){
+std::ostream& operator<<(std::ostream &out, const CouchDB::Database &db)
+{
    return out << "<Database: " << db.getName() << ">";
 }

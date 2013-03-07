@@ -17,16 +17,20 @@
 
 using namespace std;
 
-namespace CouchDB{
+namespace CouchDB
+{
 
-Exception::Exception(const string &_message){
+Exception::Exception(const string &_message)
+{
    message = _message;
 }
 
-Exception::~Exception() throw(){
+Exception::~Exception() throw()
+{
 }
 
-const char* Exception::what() const throw(){
+const char* Exception::what() const throw()
+{
    return message.c_str();
 }
 

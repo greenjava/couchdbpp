@@ -18,7 +18,8 @@
 
 using namespace std;
 
-namespace CouchDB{
+namespace CouchDB
+{
 
 Attachment::Attachment(Communication &_comm, const string &_db,
                        const string &_document, const string &_id,
@@ -41,10 +42,12 @@ Attachment::Attachment(const Attachment &attachment)
 {
 }
 
-Attachment::~Attachment(){
+Attachment::~Attachment()
+{
 }
 
-Attachment& Attachment::operator=(Attachment &attachment){
+Attachment& Attachment::operator=(Attachment &attachment)
+{
    comm     = attachment.comm;
    db       = attachment.db;
    document = attachment.document;
@@ -54,11 +57,13 @@ Attachment& Attachment::operator=(Attachment &attachment){
    return *this;
 }
 
-const string& Attachment::getID() const{
+const string& Attachment::getID() const
+{
    return id;
 }
 
-const string& Attachment::getRevision() const{
+const string& Attachment::getRevision() const
+{
    return revision;
 }
 
@@ -66,18 +71,21 @@ const string& Attachment::getContentType() const{
    return contentType;
 }
 
-string Attachment::getData(){
+string Attachment::getData()
+{
    string data;
 
    if(rawData.size() > 0)
       data = rawData;
-   else{
+   else
+   {
       string url = "/" + db + "/" + document + "/" + id;
       if(revision.size() > 0)
          url += "?rev=" + revision;
       data = comm.getRawData(url);
 
-      if(data.size() > 0 && data[0] == '{'){
+      if(data.size() > 0 && data[0] == '{')
+	  {
          // check to make sure we did not receive an error
          Object obj = boost::any_cast<Object>(*comm.getData(url));
          if(obj.find("error") != obj.end() && obj.find("reason") != obj.end())
@@ -90,7 +98,8 @@ string Attachment::getData(){
 
 } //namespace CouchDB
 
-ostream& operator<<(ostream &out, const CouchDB::Attachment &attachment){
+ostream& operator<<(ostream &out, const CouchDB::Attachment &attachment)
+{
    return out << "{id: " << attachment.getID()
               << ", rev: " << attachment.getRevision()
               << ", content-type: " << attachment.getContentType()

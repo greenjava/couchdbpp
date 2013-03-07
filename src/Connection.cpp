@@ -19,31 +19,38 @@
 
 using namespace std;
 
-namespace CouchDB{
+namespace CouchDB
+{
 
-Connection::Connection(){
+Connection::Connection()
+{
    getInfo();
 }
 
-Connection::Connection(const string &url) : comm(url){
+Connection::Connection(const string &url) : comm(url)
+{
    getInfo();
 }
 
-void Connection::getInfo(){
+void Connection::getInfo()
+{
    Variant var = comm.getData("");
    Object  obj = boost::any_cast<Object>(*var);
 
    couchDBVersion = boost::any_cast<string>(*obj["version"]);
 }
 
-Connection::~Connection(){
+Connection::~Connection()
+{
 }
 
-string Connection::getCouchDBVersion() const{
+string Connection::getCouchDBVersion() const
+{
    return couchDBVersion;
 }
 
-vector<string> Connection::listDatabases(){
+vector<string> Connection::listDatabases()
+{
    Variant var = comm.getData("/_all_dbs");
    Array   arr = boost::any_cast<Array>(*var);
 
@@ -57,11 +64,13 @@ vector<string> Connection::listDatabases(){
    return dbs;
 }
 
-Database Connection::getDatabase(const string &db){
+Database Connection::getDatabase(const string &db)
+{
    return Database(comm, db);
 }
 
-bool Connection::createDatabase(const string &db){
+bool Connection::createDatabase(const string &db)
+{
    Variant var = comm.getData("/" + db, "PUT");
    Object  obj = boost::any_cast<Object>(*var);
 
@@ -71,7 +80,8 @@ bool Connection::createDatabase(const string &db){
    return boost::any_cast<bool>(*obj["ok"]);
 }
 
-bool Connection::deleteDatabase(const string &db){
+bool Connection::deleteDatabase(const string &db)
+{
    Variant var = comm.getData("/" + db, "DELETE");
    Object  obj = boost::any_cast<Object>(*var);
 

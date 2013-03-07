@@ -17,7 +17,8 @@
 
 using namespace std;
 
-namespace CouchDB{
+namespace CouchDB
+{
 
 Revision::Revision(const string &_version, const string &_status)
    : version(_version)
@@ -31,19 +32,23 @@ Revision::Revision(const Revision &revision)
 {
 }
 
-Revision::~Revision(){
+Revision::~Revision()
+{
 }
 
-const string& Revision::getVersion() const{
+const string& Revision::getVersion() const
+{
    return version;
 }
 
-const string& Revision::getStatus() const{
+const string& Revision::getStatus() const
+{
    return status;
 }
 
 } //namespace CouchDB
 
-ostream& operator<<(ostream &out, const CouchDB::Revision &rev){
+ostream& operator<<(ostream &out, const CouchDB::Revision &rev)
+{
    return out << "{rev: " << rev.getVersion() << ", status: " << rev.getStatus() << "}";
 }
