@@ -501,18 +501,19 @@ namespace tair {
       parse(Iterator const &szFirst, Iterator const &szEnd) {
          // 1: parse the input...
 
-         typename json::grammar < char >::stack st;
-         typename json::grammar < char > gr(st);
+         typename json::grammar< typename Iterator::value_type >::stack st;
+         json::grammar< typename Iterator::value_type > gr(st);
 
          BOOST_SPIRIT_NS_::parse_info < Iterator > pi =
             BOOST_SPIRIT_NS_::parse(szFirst, szEnd, gr, BOOST_SPIRIT_NS_::space_p);
 
          // 2: skip any spaces at the end of the parsed section...
 
-         while ((pi.stop != szEnd)
-                && (*pi.stop == static_cast < char > (' '))) {
-            ++pi.stop;
+         while((pi.stop != szEnd) && (*pi.stop == static_cast< typename Iterator::value_type >(' ') || *pi.stop == static_cast< typename Iterator::value_type >('\n') || *pi.stop == static_cast< typename Iterator::value_type >('\r')))
+         {
+             ++pi.stop;
          }
+
 
          // 3: if the input's end wasn't reached or if there is more than one object on the stack => cancel...
 

@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 **/
-#include <sstream>
 
+#include <boost/cstdint.hpp>
+
+#include <sstream>
+#include <typeinfo>
 #include "couchdb/Database.hpp"
 #include "couchdb/Exception.hpp"
 
@@ -47,8 +50,14 @@ const std::string& Database::getName() const{
 std::vector<Document> Database::listDocuments(){
    Variant var = comm.getData("/" + name + "/_all_docs");
    Object  obj = boost::any_cast<Object>(*var);
+   Variant total_rows = obj["total_rows"];
 
-   int numRows = boost::any_cast<int>(*obj["total_rows"]);
+   const type_info &type = total_rows->type();
+   int numRows = 0;
+   if(type == typeid(::boost::int32_t))
+      numRows = boost::any_cast< ::boost::int32_t>(*total_rows);
+   else if(type == typeid(::boost::int64_t))
+      numRows = boost::any_cast< ::boost::int64_t>(*total_rows);
 
    std::vector<Document> docs;
 

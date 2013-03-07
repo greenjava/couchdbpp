@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 **/
+#include <boost/cstdint.hpp>
+
 #include "couchdb/Communication.hpp"
 #include "couchdb/Exception.hpp"
 
@@ -199,8 +201,10 @@ static void printHelper(ostream &out, const boost::any &value, string indent){
          out << '"' << boost::any_cast<string>(value) << '"';
       else if(type == typeid(bool))
          out << boost::any_cast<bool>(value);
-      else if(type == typeid(int))
-         out << boost::any_cast<int>(value);
+      else if(type == typeid(::boost::int32_t))
+         out << boost::any_cast< ::boost::int32_t>(value);
+      else if(type == typeid(::boost::int64_t))
+         out << boost::any_cast< ::boost::int64_t >(value);
       else if(type == typeid(double))
          out << boost::any_cast<double>(value);
       else if(type == typeid(Object)){
