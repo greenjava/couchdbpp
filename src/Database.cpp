@@ -52,7 +52,7 @@ std::vector<Document> Database::listDocuments(){
    Object  obj = boost::any_cast<Object>(*var);
    Variant total_rows = obj["total_rows"];
 
-   const type_info &type = total_rows->type();
+   const std::type_info &type = total_rows->type();
    int numRows = 0;
    if(type == typeid(::boost::int32_t))
       numRows = boost::any_cast< ::boost::int32_t>(*total_rows);
