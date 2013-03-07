@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #ifndef __COUCH_DB_CONNECTION_HPP__
 #define __COUCH_DB_CONNECTION_HPP__
 
@@ -24,30 +24,32 @@
 #include "couchdb/Communication.hpp"
 #include "couchdb/export.hpp"
 
-namespace CouchDB{
+namespace CouchDB
+{
 
-class COUCHDB_API Connection{
-   public:
-      Connection();
-      Connection(const std::string&);
-      ~Connection();
+class COUCHDB_API Connection
+{
+public:
+    Connection();
+    Connection(const std::string&);
+    ~Connection();
 
-      std::string getCouchDBVersion() const;
+    std::string getCouchDBVersion() const;
 
-      std::vector<std::string> listDatabases();
-      Database getDatabase(const std::string&);
+    std::vector<std::string> listDatabases();
+    Database getDatabase(const std::string&);
 
-      bool createDatabase(const std::string&);
-      bool deleteDatabase(const std::string&);
+    bool createDatabase(const std::string&);
+    bool deleteDatabase(const std::string&);
 
-   private:
-      void init(const std::string&);
-      void getInfo();
+private:
+    void init(const std::string&);
+    void getInfo();
 
-      Communication comm;
-      std::string   couchDBVersion;
+    Communication comm;
+    std::string   couchDBVersion;
 };
 
-}
+} //namespace CouchDB
 
 #endif

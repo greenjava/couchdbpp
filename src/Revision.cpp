@@ -38,17 +38,17 @@ Revision::~Revision()
 
 const string& Revision::getVersion() const
 {
-   return version;
+    return version;
 }
 
 const string& Revision::getStatus() const
 {
-   return status;
+    return status;
 }
 
 } //namespace CouchDB
 
 ostream& operator<<(ostream &out, const CouchDB::Revision &rev)
 {
-   return out << "{rev: " << rev.getVersion() << ", status: " << rev.getStatus() << "}";
+    return out << "{rev: " << rev.getVersion() << ", status: " << rev.getStatus() << "}";
 }

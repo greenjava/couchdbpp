@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #ifndef __COUCH_DB_COMM_HPP__
 #define __COUCH_DB_COMM_HPP__
 
@@ -40,7 +40,7 @@ typedef std::map<std::string, Variant> Object;
 template<typename T>
 Variant createVariant(T value)
 {
-   return Variant(new boost::any(value));
+    return Variant(new boost::any(value));
 }
 
 template<>
@@ -49,29 +49,30 @@ COUCHDB_API Variant createVariant<const char*>(const char *value);
 class COUCHDB_API Communication
 {
 public:
-      typedef std::map<std::string, std::string> HeaderMap;
+    typedef std::map<std::string, std::string> HeaderMap;
 
-      Communication();
-      Communication(const std::string&);
-      ~Communication();
+    Communication();
+    Communication(const std::string&);
+    ~Communication();
 
-      Variant getData(const std::string&, const std::string &method = "GET",
-                      const std::string &data = "");
-      Variant getData(const std::string&, const HeaderMap&,
-                      const std::string &method = "GET",
-                      const std::string &data = "");
+    Variant getData(const std::string&, const std::string &method = "GET",
+            const std::string &data = "");
+    Variant getData(const std::string&, const HeaderMap&,
+            const std::string &method = "GET",
+            const std::string &data = "");
 
-      std::string getRawData(const std::string&);
+    std::string getRawData(const std::string&);
+
 private:
-      void init(const std::string&);
-      Variant getData(const std::string&, const std::string&,
-                      std::string, const HeaderMap&);
-      void getRawData(const std::string&, const std::string&,
-                      std::string, const HeaderMap&);
+    void init(const std::string&);
+    Variant getData(const std::string&, const std::string&,
+            std::string, const HeaderMap&);
+    void getRawData(const std::string&, const std::string&,
+            std::string, const HeaderMap&);
 
-      CURL        *curl;
-      std::string baseURL;
-      std::string buffer;
+    CURL        *curl;
+    std::string baseURL;
+    std::string buffer;
 };
 
 } //namespace CouchDB

@@ -64,7 +64,8 @@ Communication& Document::getCommunication()
    return comm;
 }
 
-const string& Document::getDatabase() const{
+const string& Document::getDatabase() const
+{
    return db;
 }
 
@@ -73,7 +74,8 @@ const string& Document::getID() const
    return id;
 }
 
-const string& Document::getKey() const{
+const string& Document::getKey() const
+{
    return key;
 }
 
@@ -101,7 +103,8 @@ vector<Revision> Document::getAllRevisions()
 
    Array::iterator        revInfoItr = revInfo.begin();
    const Array::iterator &revInfoEnd = revInfo.end();
-   for(; revInfoItr != revInfoEnd; ++revInfoItr){
+   for(; revInfoItr != revInfoEnd; ++revInfoItr)
+   {
       Object revObj    = boost::any_cast<Object>(**revInfoItr);
       revisions.push_back(Revision(boost::any_cast<string>(*revObj["rev"]),
                                    boost::any_cast<string>(*revObj["status"])));
@@ -117,7 +120,9 @@ Variant Document::getData()
 
    if(obj.find("_id") == obj.end() && obj.find("_rev") == obj.end() &&
       obj.find("error") != obj.end() && obj.find("reason") != obj.end())
+   {
       throw Exception("Document '" + getID() + "' not found: " + boost::any_cast<string>(*obj["reason"]));
+   }
 
    return var;
 }
@@ -220,8 +225,7 @@ Document Document::copy(const string &targetId, const string &targetRev)
    if(obj.find("id") != obj.end())
       newId = boost::any_cast<string>(*obj["id"]);
 
-   return Document(comm, db, newId, "",
-                   boost::any_cast<string>(*obj["rev"]));
+   return Document(comm, db, newId, "", boost::any_cast<string>(*obj["rev"]));
 }
 
 bool Document::remove()
@@ -234,6 +238,7 @@ bool Document::remove()
 
 } //namespace CouchDB
 
-ostream& operator<<(ostream &out, const CouchDB::Document &doc){
+ostream& operator<<(ostream &out, const CouchDB::Document &doc)
+{
    return out << "{id: " << doc.getID() << ", key: " << doc.getKey() << ", rev: " << doc.getRevision() << "}";
 }

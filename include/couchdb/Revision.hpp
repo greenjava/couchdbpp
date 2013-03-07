@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #ifndef __COUCH_DB_REVISION_HPP__
 #define __COUCH_DB_REVISION_HPP__
 
@@ -21,23 +21,25 @@
 
 #include "couchdb/export.hpp"
 
-namespace CouchDB{
+namespace CouchDB
+{
 
-class COUCHDB_API Revision{
-   public:
-      Revision(const std::string&, const std::string&);
-      Revision(const Revision&);
-      ~Revision();
+class COUCHDB_API Revision
+{
+public:
+    Revision(const std::string&, const std::string&);
+    Revision(const Revision&);
+    ~Revision();
 
-      const std::string& getVersion() const;
-      const std::string& getStatus() const;
+    const std::string& getVersion() const;
+    const std::string& getStatus() const;
 
-   private:
-      std::string version;
-      std::string status;
+private:
+    std::string version;
+    std::string status;
 };
 
-}
+} //namespace CouchDB
 
 COUCHDB_API std::ostream& operator<<(std::ostream&, const CouchDB::Revision&);
 

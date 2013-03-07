@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #ifndef __COUCH_DB_EXCEPTION_HPP__
 #define __COUCH_DB_EXCEPTION_HPP__
 
@@ -20,18 +20,20 @@
 
 #include "couchdb/export.hpp"
 
-namespace CouchDB{
+namespace CouchDB
+{
 
-class COUCHDB_API Exception : public std::exception{
-   public:
-      Exception(const std::string&);
-      virtual ~Exception() throw();
-      virtual const char* what() const throw();
+class COUCHDB_API Exception : public std::exception
+{
+public:
+    Exception(const std::string&);
+    virtual ~Exception() throw();
+    virtual const char* what() const throw();
 
-   private:
-      std::string message;
+private:
+    std::string message;
 };
 
-}
+} //namespace CouchDB
 
 #endif

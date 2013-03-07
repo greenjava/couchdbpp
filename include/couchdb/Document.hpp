@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #ifndef __COUCH_DB_DOCUMENT_HPP__
 #define __COUCH_DB_DOCUMENT_HPP__
 
@@ -24,54 +24,56 @@
 #include "couchdb/Attachment.hpp"
 #include "couchdb/export.hpp"
 
-namespace CouchDB{
+namespace CouchDB
+{
 
-class COUCHDB_API Document{
-   friend class Database;
+class COUCHDB_API Document
+{
+    friend class Database;
 
-   protected:
-      Document(Communication&, const std::string&,
-               const std::string&, const std::string&, const std::string&);
+protected:
+    Document(Communication&, const std::string&,
+            const std::string&, const std::string&, const std::string&);
 
-   public:
-      Document(const Document&);
-      ~Document();
+public:
+    Document(const Document&);
+    ~Document();
 
-      Document& operator=(Document&);
-      bool operator==(const Document&);
+    Document& operator=(Document&);
+    bool operator==(const Document&);
 
-      const std::string& getID() const;
-      const std::string& getKey() const;
-      const std::string& getRevision() const;
+    const std::string& getID() const;
+    const std::string& getKey() const;
+    const std::string& getRevision() const;
 
-      std::vector<Revision> getAllRevisions();
+    std::vector<Revision> getAllRevisions();
 
-      Variant getData();
+    Variant getData();
 
-      bool addAttachment(const std::string&, const std::string&,
-                         const std::string&);
-      Attachment getAttachment(const std::string&);
-      std::vector<Attachment> getAllAttachments();
-      bool removeAttachment(const std::string&);
+    bool addAttachment(const std::string&, const std::string&,
+            const std::string&);
+    Attachment getAttachment(const std::string&);
+    std::vector<Attachment> getAllAttachments();
+    bool removeAttachment(const std::string&);
 
-      Document copy(const std::string&, const std::string &rev = "");
-      bool remove();
+    Document copy(const std::string&, const std::string &rev = "");
+    bool remove();
 
-   protected:
-      Communication& getCommunication();
-      const std::string& getDatabase() const;
+protected:
+    Communication& getCommunication();
+    const std::string& getDatabase() const;
 
-      std::string getURL(bool) const;
+    std::string getURL(bool) const;
 
-   private:
-      Communication &comm;
-      std::string   db;
-      std::string   id;
-      std::string   key;
-      std::string   revision;
+private:
+    Communication &comm;
+    std::string   db;
+    std::string   id;
+    std::string   key;
+    std::string   revision;
 };
 
-}
+} //namespace CouchDB
 
 COUCHDB_API std::ostream& operator<<(std::ostream&, const CouchDB::Document&);
 

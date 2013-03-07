@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #include "couchdb/Exception.hpp"
 
 using namespace std;
@@ -22,7 +22,7 @@ namespace CouchDB
 
 Exception::Exception(const string &_message)
 {
-   message = _message;
+    message = _message;
 }
 
 Exception::~Exception() throw()
@@ -31,7 +31,7 @@ Exception::~Exception() throw()
 
 const char* Exception::what() const throw()
 {
-   return message.c_str();
+    return message.c_str();
 }
 
 } //namespace CouchDB

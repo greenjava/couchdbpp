@@ -67,7 +67,8 @@ const string& Attachment::getRevision() const
    return revision;
 }
 
-const string& Attachment::getContentType() const{
+const string& Attachment::getContentType() const
+{
    return contentType;
 }
 
@@ -76,12 +77,16 @@ string Attachment::getData()
    string data;
 
    if(rawData.size() > 0)
+   {
       data = rawData;
+   }
    else
    {
       string url = "/" + db + "/" + document + "/" + id;
       if(revision.size() > 0)
+      {
          url += "?rev=" + revision;
+      }
       data = comm.getRawData(url);
 
       if(data.size() > 0 && data[0] == '{')
@@ -89,7 +94,10 @@ string Attachment::getData()
          // check to make sure we did not receive an error
          Object obj = boost::any_cast<Object>(*comm.getData(url));
          if(obj.find("error") != obj.end() && obj.find("reason") != obj.end())
-            throw Exception("Could not retrieve data for attachment '" + id + "': " + boost::any_cast<string>(*obj["reason"]));
+         {
+            throw Exception("Could not retrieve data for attachment '" + id + "': " +
+                    boost::any_cast<string>(*obj["reason"]));
+         }
       }
    }
 

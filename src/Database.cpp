@@ -38,13 +38,13 @@ Database::~Database(){
 
 Database& Database::operator=(Database &db)
 {
-   name = db.getName();
-   return *this;
+    name = db.getName();
+    return *this;
 }
 
 const std::string& Database::getName() const
 {
-   return name;
+    return name;
 }
 
 std::vector<Document> Database::listDocuments()
@@ -104,15 +104,15 @@ Document Database::getDocument(const std::string &id, const std::string &rev)
 
 static std::string createJSON(const Variant &data)
 {
-   std::ostringstream ostr;
-   ostr << data;
-   return ostr.str();
+    std::ostringstream ostr;
+    ostr << data;
+    return ostr.str();
 }
 
 Document Database::createDocument(const Variant &data, const std::string &id)
 {
-   std::vector<Attachment> attachments;
-   return createDocument(data, attachments, id);
+    std::vector<Attachment> attachments;
+    return createDocument(data, attachments, id);
 }
 
 Document Database::createDocument(Variant data,
@@ -164,5 +164,5 @@ Document Database::createDocument(Variant data,
 
 std::ostream& operator<<(std::ostream &out, const CouchDB::Database &db)
 {
-   return out << "<Database: " << db.getName() << ">";
+    return out << "<Database: " << db.getName() << ">";
 }

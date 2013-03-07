@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #ifndef __COUCH_DB_ATTACHMENT_HPP__
 #define __COUCH_DB_ATTACHMENT_HPP__
 
@@ -22,38 +22,40 @@
 #include "couchdb/Communication.hpp"
 #include "couchdb/export.hpp"
 
-namespace CouchDB{
+namespace CouchDB
+{
 
-class COUCHDB_API Attachment{
-   friend class Document;
+class COUCHDB_API Attachment
+{
+    friend class Document;
 
-   protected:
-      Attachment(Communication&, const std::string&, const std::string&,
-                 const std::string&, const std::string&, const std::string&);
+protected:
+    Attachment(Communication&, const std::string&, const std::string&,
+            const std::string&, const std::string&, const std::string&);
 
-   public:
-      Attachment(const Attachment&);
-      ~Attachment();
+public:
+    Attachment(const Attachment&);
+    ~Attachment();
 
-      Attachment& operator=(Attachment&);
+    Attachment& operator=(Attachment&);
 
-      const std::string& getID() const;
-      const std::string& getRevision() const;
-      const std::string& getContentType() const;
+    const std::string& getID() const;
+    const std::string& getRevision() const;
+    const std::string& getContentType() const;
 
-      std::string getData();
+    std::string getData();
 
-   private:
-      Communication &comm;
-      std::string   db;
-      std::string   document;
-      std::string   id;
-      std::string   revision;
-      std::string   contentType;
-      std::string   rawData;
+private:
+    Communication &comm;
+    std::string   db;
+    std::string   document;
+    std::string   id;
+    std::string   revision;
+    std::string   contentType;
+    std::string   rawData;
 };
 
-}
+} //namespace CouchDB
 
 COUCHDB_API std::ostream& operator<<(std::ostream&, const CouchDB::Attachment&);
 

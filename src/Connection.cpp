@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #include <iostream>
 
 #include "couchdb/Connection.hpp"
@@ -24,20 +24,20 @@ namespace CouchDB
 
 Connection::Connection()
 {
-   getInfo();
+    getInfo();
 }
 
 Connection::Connection(const string &url) : comm(url)
 {
-   getInfo();
+    getInfo();
 }
 
 void Connection::getInfo()
 {
-   Variant var = comm.getData("");
-   Object  obj = boost::any_cast<Object>(*var);
+    Variant var = comm.getData("");
+    Object  obj = boost::any_cast<Object>(*var);
 
-   couchDBVersion = boost::any_cast<string>(*obj["version"]);
+    couchDBVersion = boost::any_cast<string>(*obj["version"]);
 }
 
 Connection::~Connection()
@@ -46,49 +46,49 @@ Connection::~Connection()
 
 string Connection::getCouchDBVersion() const
 {
-   return couchDBVersion;
+    return couchDBVersion;
 }
 
 vector<string> Connection::listDatabases()
 {
-   Variant var = comm.getData("/_all_dbs");
-   Array   arr = boost::any_cast<Array>(*var);
+    Variant var = comm.getData("/_all_dbs");
+    Array   arr = boost::any_cast<Array>(*var);
 
-   vector<string> dbs;
+    vector<string> dbs;
 
-   Array::iterator        db     = arr.begin();
-   const Array::iterator &db_end = arr.end();
-   for(; db != db_end; ++db)
-      dbs.push_back(boost::any_cast<string>(**db));
+    Array::iterator        db     = arr.begin();
+    const Array::iterator &db_end = arr.end();
+    for(; db != db_end; ++db)
+        dbs.push_back(boost::any_cast<string>(**db));
 
-   return dbs;
+    return dbs;
 }
 
 Database Connection::getDatabase(const string &db)
 {
-   return Database(comm, db);
+    return Database(comm, db);
 }
 
 bool Connection::createDatabase(const string &db)
 {
-   Variant var = comm.getData("/" + db, "PUT");
-   Object  obj = boost::any_cast<Object>(*var);
+    Variant var = comm.getData("/" + db, "PUT");
+    Object  obj = boost::any_cast<Object>(*var);
 
-   if(obj.find("error") != obj.end())
-      throw Exception("Unable to create database '" + db + "': " + boost::any_cast<string>(*obj["reason"]));
+    if(obj.find("error") != obj.end())
+        throw Exception("Unable to create database '" + db + "': " + boost::any_cast<string>(*obj["reason"]));
 
-   return boost::any_cast<bool>(*obj["ok"]);
+    return boost::any_cast<bool>(*obj["ok"]);
 }
 
 bool Connection::deleteDatabase(const string &db)
 {
-   Variant var = comm.getData("/" + db, "DELETE");
-   Object  obj = boost::any_cast<Object>(*var);
+    Variant var = comm.getData("/" + db, "DELETE");
+    Object  obj = boost::any_cast<Object>(*var);
 
-   if(obj.find("error") != obj.end())
-      throw Exception("Unable to create database '" + db + "': " + boost::any_cast<string>(*obj["reason"]));
+    if(obj.find("error") != obj.end())
+        throw Exception("Unable to create database '" + db + "': " + boost::any_cast<string>(*obj["reason"]));
 
-   return boost::any_cast<bool>(*obj["ok"]);
+    return boost::any_cast<bool>(*obj["ok"]);
 }
 
 } //namespace CouchDB

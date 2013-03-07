@@ -12,7 +12,7 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
-**/
+ **/
 #ifndef __COUCH_DB_DATABASE_HPP__
 #define __COUCH_DB_DATABASE_HPP__
 
@@ -22,37 +22,39 @@
 #include "couchdb/Document.hpp"
 #include "couchdb/export.hpp"
 
-namespace CouchDB{
+namespace CouchDB
+{
 
-class COUCHDB_API Database{
-   friend class Connection;
+class COUCHDB_API Database
+{
+    friend class Connection;
 
-   protected:
-      Database(Communication&, const std::string&);
+protected:
+    Database(Communication&, const std::string&);
 
-   public:
-      Database(const Database&);
-      ~Database();
+public:
+    Database(const Database&);
+    ~Database();
 
-      Database& operator=(Database&);
+    Database& operator=(Database&);
 
-      const std::string& getName() const;
+    const std::string& getName() const;
 
-      std::vector<Document> listDocuments();
-      Document getDocument(const std::string&, const std::string &rev="");
-      Document createDocument(const Variant&, const std::string &id="");
-      Document createDocument(Variant, std::vector<Attachment>,
-                              const std::string &id="");
+    std::vector<Document> listDocuments();
+    Document getDocument(const std::string&, const std::string &rev="");
+    Document createDocument(const Variant&, const std::string &id="");
+    Document createDocument(Variant, std::vector<Attachment>,
+            const std::string &id="");
 
-   protected:
-      Communication& getCommunication();
+protected:
+    Communication& getCommunication();
 
-   private:
-      Communication &comm;
-      std::string   name;
+private:
+    Communication &comm;
+    std::string   name;
 };
 
-}
+} //namespace CouchDB
 
 COUCHDB_API std::ostream& operator<<(std::ostream&, const CouchDB::Database&);
 
