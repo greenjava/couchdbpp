@@ -509,7 +509,10 @@ namespace tair {
 
          // 2: skip any spaces at the end of the parsed section...
 
-         while((pi.stop != szEnd) && (*pi.stop == static_cast< typename Iterator::value_type >(' ') || *pi.stop == static_cast< typename Iterator::value_type >('\n') || *pi.stop == static_cast< typename Iterator::value_type >('\r')))
+         while((pi.stop != szEnd) 
+                && (*pi.stop == static_cast< typename Iterator::value_type >(' ') 
+                    || *pi.stop == static_cast< typename Iterator::value_type >('\n') 
+                    || *pi.stop == static_cast< typename Iterator::value_type >('\r')))
          {
              ++pi.stop;
          }
