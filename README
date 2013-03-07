@@ -1,0 +1,9 @@
+CouchDB++
+
+C++ library for interacting with a CouchDB <http://couchdb.apache.org>
+instance.
+
+This library uses a modified version of TinyJSON <http://blog.beef.de/projects/tinyjson>
+via <http://json.org>
+
+tragicphantom@gmail.com
