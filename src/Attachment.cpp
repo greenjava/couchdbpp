@@ -85,7 +85,7 @@ string Attachment::getData()
       data = comm.getRawData(url);
 
       if(data.size() > 0 && data[0] == '{')
-	  {
+      {
          // check to make sure we did not receive an error
          Object obj = boost::any_cast<Object>(*comm.getData(url));
          if(obj.find("error") != obj.end() && obj.find("reason") != obj.end())

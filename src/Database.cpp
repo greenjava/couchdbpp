@@ -65,7 +65,7 @@ std::vector<Document> Database::listDocuments()
       Array::iterator        row     = rows.begin();
       const Array::iterator &row_end = rows.end();
       for(; row != row_end; ++row)
-	  {
+      {
          Object docObj = boost::any_cast<Object>(**row);
          Object values = boost::any_cast<Object>(*docObj["value"]);
 
@@ -126,7 +126,7 @@ Document Database::createDocument(Variant data,
       std::vector<Attachment>::iterator attachment = attachments.begin();
       const std::vector<Attachment>::iterator &attachmentEnd = attachments.end();
       for(; attachment != attachmentEnd; ++attachment)
-	  {
+      {
          Object attachmentData;
          attachmentData["content_type"] = createVariant(attachment->getContentType());
          attachmentData["data"        ] = createVariant(attachment->getData());

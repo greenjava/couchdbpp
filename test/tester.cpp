@@ -79,7 +79,7 @@ int main()
 
    try
    {
-	  const std::string url = "http://stage-rd-6:5984";
+      const std::string url = "http://stage-rd-6:5984";
       CouchDB::Connection conn(url);
       cout << "CouchDB version: " << conn.getCouchDBVersion() << endl;
 
@@ -147,12 +147,12 @@ int main()
       cout << "Trying to access removed attachment: " << a << endl;
 
       try
-	  {
+      {
          string badData = a.getData();
          cout << "ERROR: Got valid data for removed attachment: " << badData << endl;
       }
       catch(CouchDB::Exception &e)
-	  {
+      {
          cerr << "Unable to retrieve data for removed attachment (GOOD): " << e.what() << endl;
       }
 
@@ -172,12 +172,12 @@ int main()
       cout << "Trying to retrieve data for removed document: " << testDoc << endl;
 
       try
-	  {
+      {
          data = testDoc.getData();
          cout << "ERROR: Got valid data for removed document: " << data << endl;
       }
       catch(CouchDB::Exception &e)
-	  {
+      {
          cerr << "Unable to retrieve data for removed document (GOOD): " << e.what() << endl;
       }
 
